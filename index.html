@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Mesozoic Dinosaur Fossils in North America</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link rel='icon' href='https://newmapsplus.github.io/favicon.ico' type='image/x-icon' />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
+
+    <style>
+      
+        body {
+            margin: 0;
+            padding: 0;
+            background: #e3e3e6;
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            color: #3d3d3d;
+            font-size: 100%;
+            /* 16px is default browser size */
+
+        }
+
+        header,
+        section,
+        footer {
+            width: 80%;
+            margin: 10px auto;
+        }
+
+        h1 {
+            font-weight: 900;
+            font-size: 2.8em;
+            font-style: italic;
+            /* The em unit. 3x the current size */
+            letter-spacing: .02em;
+            margin: 5px 0;
+            /* text-transform: uppercase; */
+        }
+
+        h2 {
+            font-weight: 300;
+            color: #63666a;
+            font-size: 2.2em;
+            letter-spacing: .06em;
+            font-style: italic;
+            margin: 5px 0;
+        }
+
+        h3 {
+            font-weight: 300i;
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        p {
+            font-size: 1.3em;
+            line-height: 1.8em;
+            margin-bottom: 5px;
+        }
+
+        a {
+            color: #004A8B;
+            font-weight: 400;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        ul {
+            padding: 0px 20px 4px 20px;
+            font-size: 1.1em;
+            line-height: 1.2em;
+            color: #63666a;
+        }
+
+        li {
+            margin: 10px 0
+        }
+
+        hr {
+            margin: 20px 0;
+            border: 0;
+            height: 1px;
+            background: #63666a;
+
+        }
+
+        .linkbox {
+            margin: 3px 0 20px 0;
+            display: block;
+            font-size: 0.9em;
+            font-weight: 300;
+            line-height: 1.3em;
+        }
+
+        #map {
+            width: 100%;
+            height: 450px;
+            margin: 20px auto;
+
+        }
+
+        .max-image-width {
+            width: 100%;
+        }
+
+        /* Use float property to make two-column layout */
+        .first-column {
+            float: left;
+            width: 49%;
+            padding-right: 2%;
+        }
+
+        .column {
+            float: left;
+            width: 49%;
+        }
+
+        /* Clear floats after the columns */
+        .row::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        /* When browser is 900px wide or less */
+        @media screen and (max-width: 900px) {
+
+            .first-column,
+            .second-column {
+                width: 100%;
+            }
+        }
+
+        .leaflet-tooltip {
+            position: absolute;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            letter-spacing: .04 em;
+            padding: 5px 10px;
+            background: #ddd;
+            border: 1px solid #fff;
+            border-radius: 3px;
+            color: #3d3d3d;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Mesozoic Dinosaurs in North America</h1>
+    </header>
+    <section>
+        <div class="row">
+            <div id="map"></div>
+
+            <div class="first-column">
+                <h2>Mesozoic Dinosaur Fossils in North America</h2>
+                <p>
+                    The map above, authored by Sarah Jane Tamme at New Maps Plus, shows all of the dinsouria fossils
+                    found in North America that lived during the Mesozoic Era, specifically the triassic, jurassic,
+                    and cretaceous time periods. The Mesozoic Era lasted from about 252 to 66 million years ago.
+                </p>
+
+                <p><b>Social Links</b></p>
+                <ul>
+                    <li>See my projects on <a href="https://github.com/sjtamme">Github</a>.</li>
+                    <li>Check out the University of Kentucky's <a href='https://newmapsplus.as.uky.edu/'>New Maps
+                            Plus</a> program.</li>
+                    <li>Connect with me on <a
+                            href="https://www.linkedin.com/in/sarah-jane-tamme-598b76164">LinkedIn</a>.</li>
+                </ul>
+
+
+            </div>
+            <div class="column">
+                <div class="linkbox">
+                   Caption
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <hr>
+
+        <a href="https://newmapsplus.github.io">
+            <img src="https://newmapsplus.github.io/assets/graphics/logo-2018-nmp-75px-h-gray.png"
+                alt="University of Kentucky Geography">
+        </a>
+
+        <a href="https://uky-gis.github.io">
+            <img src="https://newmapsplus.github.io/assets/graphics/logo-2018-geography-75px-h.png"
+                alt="University of Kentucky Geography">
+        </a>
+
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+
+
+    <script>
+        var options = {
+            center: [38, -95],
+            zoom: 4
+        }
+
+        var map = L.map('map', options);
+
+        var basemap_source =
+            'https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/dark_all/{z}/{x}/{y}.png'
+
+
+        var basemap_options = {
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        };
+
+        var tiles = L.tileLayer(basemap_source, basemap_options).addTo(map);
+
+        $.getJSON("data/dinos.json", function (data) {
+            console.log(data);
+        });
+
+        var triassicStyle = {
+            color: '#1f78b4',
+            fillColor: '#1f78b4',
+            weight: 1,
+            stroke: 1,
+            fillOpacity: .8
+        }
+
+        var jurassicStyle = {
+            color: '#ffff99',
+            fillColor: '#ffff99',
+            weight: 1,
+            stroke: 1,
+            fillOpacity: .8
+        }
+
+        var cretStyle = {
+            color: 'skyblue',
+            fillColor: 'skyblue',
+            weight: 1,
+            stroke: 1,
+            fillOpacity: .8
+        }
+
+        var fossils = $.getJSON("data/dinos.json", function (data) {
+            for (x of data.records) {
+                var lat = x.lat
+                var lng = x.lng
+                var tbm = x.tbm
+                // console.log(lat, lng);
+                var latlng = L.latLng(lat, lng);
+                var circleOptions = {
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: .5,
+                    fillColor: 'FF0000',
+                    fillOpacity: 0.35,
+                    center: latlng,
+                    radius: 10
+                };
+                for (var i = 0; i < x.length; i++) {
+                    if (tbm = "lopingian" || "induan" || "olenekian" || "anisian" || "ladinian" || "carnian" ||
+                        "norian" || "rhaetian") {
+                            return L.circleMarker(latlng, triassicStyle);
+                    } else if (tbm = "hettangian" || "sinemurian" || "pliensbachian" || "toarcian" ||
+                        "aalenian" ||
+                        "bajocain" || "bathonian" || "callovian" || "oxfordian" || "kimmeridgian" || "tithonian"
+                        ) {
+                        return L.circleMarker(latlng, jurassicStyle);
+                    } else (tbm = "berriasian" || "valanginian" || "hauterivian" || "barremian" || "aptian" ||
+                        "albian" || "cenomanian" || "turonian" || "coniacian" || "santonian" ||
+                        "campanian" || "maastrichtian"); {
+                            return L.circleMarker(latlng, cretStyle);
+                    };
+                }
+            }
+                 L.circleMarker(latlng, circleOptions).addTo(map);
+            }); 
+
+        // if x.tbm = ..... then circle marker = ....
+        // options variable (color = default color)
+        // have arrays for time periods - periods in cret, loop through those
+        // if any of those circle marker = blue in cm options, override default
+
+        var triassic = ["lopingian", "induan", "olenekian", "anisian", "ladinian", "carnian", "norian", "rhaetian"];
+        var jurassic = ["hettangian", "sinemurian", "pliensbachian", "toarcian", "aalenian", "bajocain", "bathonian",
+            "callovian", "oxfordian", "kimmeridgian", "tithonian"
+        ];
+        var cret = ["berriasian", "valanginian", "hauterivian", "barremian", "aptian", "albian", "cenomanian",
+            "turonian", "coniacian", "santonian", "campanian", "maastrichtian"
+        ]
+    </script>
+
+</body>
+
+
+</html>
