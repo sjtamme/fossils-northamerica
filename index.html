@@ -275,7 +275,9 @@
                 var lat = x.lat
                 var lng = x.lng
                 var tbm = x.tbm
-                var popup = `<h3>${tbm}</h3>`
+                var gnl = x.gnl
+                var tna = x.tna
+                var popup = `<h3>${tbm}</h3> <p>Genus: ${gnl}</p> <p>Species: ${tna}`
                 // console.log(lat, lng);
                 var latlng = L.latLng(lat, lng);
                 var marker = L.circleMarker(latlng, commonStyles) 
