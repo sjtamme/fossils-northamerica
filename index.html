@@ -13,7 +13,6 @@
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
 
     <style>
-      
         body {
             margin: 0;
             padding: 0;
@@ -185,7 +184,7 @@
             </div>
             <div class="column">
                 <div class="linkbox">
-                   Caption
+                    Caption
                 </div>
             </div>
         </div>
@@ -260,22 +259,30 @@
             fillOpacity: .8
         }
 
+        var commonStyles = {
+			weight: 1,
+			stroke: 1,
+            fillColor: 'green',
+			fillOpacity: .3
+		}
+
         var fossils = $.getJSON("data/dinos.json", function (data) {
+
             for (x of data.records) {
                 var lat = x.lat
                 var lng = x.lng
                 var tbm = x.tbm
+                var popup = `<h3>${tbm}</h3>`
                 // console.log(lat, lng);
                 var latlng = L.latLng(lat, lng);
-                var circleOptions = {
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 0.8,
-                    strokeWeight: .5,
-                    fillColor: 'FF0000',
-                    fillOpacity: 0.35,
-                    center: latlng,
-                    radius: 10
-                };
+                var marker = L.circleMarker(latlng, commonStyles) 
+                    
+                    .addTo(map)
+                    .bindPopup(popup);
+                
+
+
+                /*
                 for (var i = 0; i < x.length; i++) {
                     if (tbm = "lopingian" || "induan" || "olenekian" || "anisian" || "ladinian" || "carnian" ||
                         "norian" || "rhaetian") {
@@ -291,14 +298,12 @@
                             return L.circleMarker(latlng, cretStyle);
                     };
                 }
-            }
-                 L.circleMarker(latlng, circleOptions).addTo(map);
-            }); 
+            } */
+                // L.circleMarker(latlng, circleOptions).addTo(map);
 
-        // if x.tbm = ..... then circle marker = ....
-        // options variable (color = default color)
-        // have arrays for time periods - periods in cret, loop through those
-        // if any of those circle marker = blue in cm options, override default
+            }
+        });
+
 
         var triassic = ["lopingian", "induan", "olenekian", "anisian", "ladinian", "carnian", "norian", "rhaetian"];
         var jurassic = ["hettangian", "sinemurian", "pliensbachian", "toarcian", "aalenian", "bajocain", "bathonian",
