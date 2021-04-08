@@ -123,6 +123,40 @@
             width: 49%;
         }
 
+
+        .legend {
+            padding: 6px 8px;
+            font-size: 1em;
+            border: 2px solid rgba(244, 244, 244, 0.2);
+            background: rgba(73, 62, 62, 0.9);
+            color: rgba(244, 244, 244, 0.8);
+            border-radius: 5px;
+        }
+
+        .legend h3 {
+            font-size: 1.1em;
+            font-weight: normal;
+            color: #ddd;
+            margin: 0 0 10px 0;
+        }
+
+        .legend span {
+            width: 20px;
+            height: 20px;
+            float: left;
+            margin: 0 10px 4px 0;
+        }
+
+        .legend label {
+            font-size: 1.1em;
+        }
+
+        .legend label:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
         /* Clear floats after the columns */
         .row::after {
             content: "";
@@ -183,11 +217,10 @@
 
             </div>
             <div class="column">
-                <img class="max-image-width" src="data/meso.jpg"
-					title="Mesozoic Dinsoaurs">
-				<div class="linkbox">
-					The Mesozoic Era is commonly known as the Age of the Dinosaurs.
-                Photo from <a href="https://www.livescience.com/38596-mesozoic-era.html">Live Science</a>.
+                <img class="max-image-width" src="data/meso.jpg" title="Mesozoic Dinsoaurs">
+                <div class="linkbox">
+                    The Mesozoic Era is commonly known as the Age of the Dinosaurs.
+                    Photo from <a href="https://www.livescience.com/38596-mesozoic-era.html">Live Science</a>.
                 </div>
             </div>
         </div>
@@ -243,31 +276,31 @@
             fillColor: '#fde0dd',
             weight: 1,
             stroke: 2,
-            fillOpacity: .4
+            fillOpacity: .8
         }
 
         var jurassicStyle = {
-            color: '#fa9fb5',
-            fillColor: '#fa9fb5',
+            color: '#b3cd33',
+            fillColor: '#b3cd33',
             weight: 1,
             stroke: 2,
-            fillOpacity: .4
+            fillOpacity: .8
         }
 
         var cretStyle = {
-            color: '#c51b8a',
-            fillColor: '#c51b8a',
+            color: '#b3cde3',
+            fillColor: '#b3cde3',
             weight: 1,
             stroke: 2,
-            fillOpacity: .5
+            fillOpacity: .8
         }
 
         var commonStyles = {
-			weight: 1,
-			stroke: 1,
+            weight: 1,
+            stroke: 1,
             fillColor: 'green',
-			fillOpacity: .3
-		}
+            fillOpacity: .5
+        }
 
         var fossils = $.getJSON("data/dinos.json", function (data) {
 
@@ -280,52 +313,72 @@
                 var popup = `<h3>${tbm}</h3> <p>Genus: ${gnl}</p> <p>Species: ${tna}`
                 // console.log(lat, lng);
                 var latlng = L.latLng(lat, lng);
-                
-                
 
 
-                /*
-                for (var i = 0; i < x.length; i++) {
-                    if (tbm = "lopingian" || "induan" || "olenekian" || "anisian" || "ladinian" || "carnian" ||
-                        "norian" || "rhaetian") {
-                            return L.circleMarker(latlng, triassicStyle);
-                    } else if (tbm = "hettangian" || "sinemurian" || "pliensbachian" || "toarcian" ||
-                        "aalenian" ||
-                        "bajocain" || "bathonian" || "callovian" || "oxfordian" || "kimmeridgian" || "tithonian"
-                        ) {
-                        return L.circleMarker(latlng, jurassicStyle);
-                    } else (tbm = "berriasian" || "valanginian" || "hauterivian" || "barremian" || "aptian" ||
-                        "albian" || "cenomanian" || "turonian" || "coniacian" || "santonian" ||
-                        "campanian" || "maastrichtian"); {
-                            return L.circleMarker(latlng, cretStyle);
-                    };
-                }
-            } */
-                // L.circleMarker(latlng, circleOptions).addTo(map);
-
-               
-                
                 if (triassic.includes(tbm.toLowerCase())) {
                     commonStyles = triassicStyle
                 } else if (jurassic.includes(tbm.toLowerCase())) {
                     commonStyles = jurassicStyle
-                } else if (cret.includes(tbm.toLowerCase())){
+                } else if (cret.includes(tbm.toLowerCase())) {
                     commonStyles = cretStyle
-                } else {
-                }
+                } else {}
 
-                var marker = L.circleMarker(latlng, commonStyles) 
-                    
+                var marker = L.circleMarker(latlng, commonStyles)
+
                     .addTo(map)
                     .bindPopup(popup);
-
-
             }
+            drawLegend();
         });
 
 
-        var triassic = ["lopingian", "induan", "olenekian", "anisian", "ladinian", "carnian", "norian", "rhaetian"];
-        var jurassic = ["hettangian", "sinemurian", "pliensbachian", "toarcian", "aalenian", "bajocain", "bathonian",
+
+        function drawLegend() {
+            var legend = L.control({
+                position: 'topright'
+            });
+            legend.onAdd = function () {
+                var div = L.DomUtil.create('div', 'legend');
+                categories = ['Triassic', 'Jurassic',
+                    'Cretaceous'
+                ];
+                div.innerHTML = `<h3>Geological Periods</h3>`;
+                for (var i = 0; i < categories.length; i++) {
+                    var colors = ['#fff000', '#b3cd33', '#b3cde3'];
+                    div.innerHTML +=
+                        `<span style="background:${colors[i]}"></span>
+               <label>${(categories[i])}`;
+                }
+             return div;
+            };
+            legend.addTo(map);
+        }
+
+        /*
+        //function drawLegend() {
+            var legend = L.control({
+                position: 'topleft'
+            });
+            legend.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'legend');
+                categories = ['Triassic', 'Jurassic', 'Cretaceous'];
+                for (var i = 0; i < categories.length; i++) {
+                    div.innerHTML +=
+                        '<i class= "circle" i style="background:' + getColor(categories[i]) + '"></i> ' +
+                        (categories[i] ? categories[i] + '<br>' : '+');
+                }
+
+                return div;
+            };
+            legend.addTo(map); */
+
+
+
+        var triassic = ["lopingian", "induan", "olenekian", "anisian", "ladinian", "carnian", "norian",
+            "rhaetian"
+        ];
+        var jurassic = ["hettangian", "sinemurian", "pliensbachian", "toarcian", "aalenian", "bajocain",
+            "bathonian",
             "callovian", "oxfordian", "kimmeridgian", "tithonian"
         ];
         var cret = ["berriasian", "valanginian", "hauterivian", "barremian", "aptian", "albian", "cenomanian",
