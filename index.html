@@ -280,10 +280,7 @@
                 var popup = `<h3>${tbm}</h3> <p>Genus: ${gnl}</p> <p>Species: ${tna}`
                 // console.log(lat, lng);
                 var latlng = L.latLng(lat, lng);
-                var marker = L.circleMarker(latlng, commonStyles) 
-                    
-                    .addTo(map)
-                    .bindPopup(popup);
+                
                 
 
 
@@ -305,6 +302,23 @@
                 }
             } */
                 // L.circleMarker(latlng, circleOptions).addTo(map);
+
+               
+                
+                if (triassic.includes(tbm.toLowerCase())) {
+                    commonStyles = triassicStyle
+                } else if (jurassic.includes(tbm.toLowerCase())) {
+                    commonStyles = jurassicStyle
+                } else if (cret.includes(tbm.toLowerCase())){
+                    commonStyles = cretStyle
+                } else {
+                }
+
+                var marker = L.circleMarker(latlng, commonStyles) 
+                    
+                    .addTo(map)
+                    .bindPopup(popup);
+
 
             }
         });
