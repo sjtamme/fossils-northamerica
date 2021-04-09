@@ -172,7 +172,8 @@
             <br>
             The map above, authored by Sarah Jane Tamme at New Maps Plus, shows all of the dinsouria fossils
             found in North America that lived during the Mesozoic Era, specifically the triassic, jurassic,
-            and cretaceous time periods. The Mesozoic Era lasted from about 252 to 66 million years ago. Data for the map 
+            and cretaceous time periods. The Mesozoic Era lasted from about 252 to 66 million years ago. Data for the
+            map
             was obtained from the <a href="https://paleobiodb.org/#/">Paleobiology Database</a>.
             <br>
             <br>
@@ -208,12 +209,8 @@
 
             var map = L.map('map', options);
 
-
-            var basemap_url = 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
-
-            var basemap_attributes = {
-                attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-            }
+            var basemap_source =
+                'https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/dark_all/{z}/{x}/{y}.png'
 
             var basemap_options = {
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
@@ -221,7 +218,7 @@
                 maxZoom: 19
             };
 
-            var tiles = L.tileLayer(basemap_url, basemap_attributes).addTo(map);
+            var tiles = L.tileLayer(basemap_source, basemap_options).addTo(map);
 
             $.getJSON("data/dinos.json", function (data) {
                 console.log(data);
