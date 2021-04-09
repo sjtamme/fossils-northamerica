@@ -16,119 +16,49 @@
         body {
             margin: 0;
             padding: 0;
-            background: #e3e3e6;
-            font-family: 'Lato', sans-serif;
-            font-weight: 300;
-            color: #3d3d3d;
-            font-size: 100%;
-            /* 16px is default browser size */
-
+            background: #222;
+            font-family: Lato, sans-serif;
+            color: #ddd;
         }
 
-        header,
-        section,
-        footer {
+        header {
             width: 80%;
-            margin: 10px auto;
+            margin: 10px auto 10px auto;
         }
 
         h1 {
-            font-weight: 900;
-            font-size: 2.8em;
-            font-style: italic;
-            /* The em unit. 3x the current size */
-            letter-spacing: .02em;
-            margin: 5px 0;
-            /* text-transform: uppercase; */
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
         }
 
-        h2 {
-            font-weight: 300;
-            color: #63666a;
-            font-size: 2.2em;
-            letter-spacing: .06em;
-            font-style: italic;
-            margin: 5px 0;
-        }
-
-        h3 {
-            font-weight: 300i;
-            font-size: 1.5em;
-            margin-bottom: 5px;
+        #map {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+            background: rgba(63, 63, 63, 0.9);
         }
 
         p {
-            font-size: 1.3em;
-            line-height: 1.8em;
-            margin-bottom: 5px;
+            font-size: 1em;
+            color: #001323;
         }
 
         a {
             color: #004A8B;
-            font-weight: 400;
-            text-decoration: none;
         }
 
         a:hover {
-            text-decoration: underline;
+            color: rgb(67, 69, 71);
+            text-decoration: none;
         }
-
-        ul {
-            padding: 0px 20px 4px 20px;
-            font-size: 1.1em;
-            line-height: 1.2em;
-            color: #63666a;
-        }
-
-        li {
-            margin: 10px 0
-        }
-
-        hr {
-            margin: 20px 0;
-            border: 0;
-            height: 1px;
-            background: #63666a;
-
-        }
-
-        .linkbox {
-            margin: 3px 0 20px 0;
-            display: block;
-            font-size: 0.9em;
-            font-weight: 300;
-            line-height: 1.3em;
-        }
-
-        #map {
-            width: 100%;
-            height: 450px;
-            margin: 20px auto;
-
-        }
-
-        .max-image-width {
-            width: 100%;
-        }
-
-        /* Use float property to make two-column layout */
-        .first-column {
-            float: left;
-            width: 49%;
-            padding-right: 2%;
-        }
-
-        .column {
-            float: left;
-            width: 49%;
-        }
-
 
         .legend {
             padding: 6px 8px;
             font-size: 1em;
             border: 2px solid rgba(244, 244, 244, 0.2);
-            background: rgba(73, 62, 62, 0.9);
+            background: rgba(100, 100, 100, 0.9);
             color: rgba(244, 244, 244, 0.8);
             border-radius: 5px;
         }
@@ -157,14 +87,54 @@
             clear: both;
         }
 
-        /* Clear floats after the columns */
-        .row::after {
-            content: "";
-            display: block;
-            clear: both;
+        .leaflet-bar a {
+            background: rgba(100, 100, 100, 0.9);
+            color: rgba(244, 244, 244, 0.8);
         }
 
-        /* When browser is 900px wide or less */
+        #info-button {
+            padding: 8px 5px;
+            font-size: 0.9em;
+            font-weight: bolder;
+            border: 2px solid rgba(244, 244, 244, 0.2);
+            background: rgba(100, 100, 100, 0.9);
+            color: rgba(244, 244, 244, 0.8);
+            border-radius: 5px;
+            position: fixed;
+            top: 11px;
+            right: 52px;
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        #footer {
+            width: 100%;
+            background: rgba(244, 244, 244, 0.8);
+            color: rgba(20, 20, 20, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            height: 0px;
+            padding: 0px;
+            z-index: 9000;
+            position: absolute;
+            bottom: -10px;
+            overflow: scroll;
+        }
+
+        #footer div {
+            padding: 10px;
+        }
+
+        #footer h1 {
+            font-size: 1.3em;
+            margin: 0 0 5px 0;
+        }
+
+        .footer-img {
+            float: right;
+            height: 10vh;
+            margin: 10px;
+        }
+
         @media screen and (max-width: 900px) {
 
             .first-column,
@@ -193,17 +163,23 @@
     <header>
         <h1>Mesozoic Dinosaurs in North America</h1>
     </header>
-    <section>
-        <div class="row">
-            <div id="map"></div>
 
-            <div class="first-column">
-                <h2>Mesozoic Dinosaur Fossils in North America</h2>
-                <p>
-                    The map above, authored by Sarah Jane Tamme at New Maps Plus, shows all of the dinsouria fossils
-                    found in North America that lived during the Mesozoic Era, specifically the triassic, jurassic,
-                    and cretaceous time periods. The Mesozoic Era lasted from about 252 to 66 million years ago.
-                </p>
+    <div id="map"></div>
+    <button id="info-button" onclick="myInfo()">Information</button>
+    <div id='footer'>
+        <div><img src="https://uky-gis.github.io/graphics/logo-color-400px.png" class="footer-img">
+            <h2>Mesozoic Dinosaur Fossils in North America</h2>
+            <br>
+            The map above, authored by Sarah Jane Tamme at New Maps Plus, shows all of the dinsouria fossils
+            found in North America that lived during the Mesozoic Era, specifically the triassic, jurassic,
+            and cretaceous time periods. The Mesozoic Era lasted from about 252 to 66 million years ago. Data for the map 
+            was obtained from the <a href="https://paleobiodb.org/#/">Paleobiology Database</a>.
+            <br>
+            <br>
+            <img class="max-image-width" src="data/meso.jpg" title="Mesozoic Dinsoaurs">
+            <div class="linkbox">
+                The Mesozoic Era is commonly known as the Age of the Dinosaurs, or Age of the Reptiles.
+                Photo from <a href="https://www.livescience.com/38596-mesozoic-era.html">Live Science</a>.
 
                 <p><b>Social Links</b></p>
                 <ul>
@@ -213,178 +189,154 @@
                     <li>Connect with me on <a
                             href="https://www.linkedin.com/in/sarah-jane-tamme-598b76164">LinkedIn</a>.</li>
                 </ul>
-
-
-            </div>
-            <div class="column">
-                <img class="max-image-width" src="data/meso.jpg" title="Mesozoic Dinsoaurs">
-                <div class="linkbox">
-                    The Mesozoic Era is commonly known as the Age of the Dinosaurs.
-                    Photo from <a href="https://www.livescience.com/38596-mesozoic-era.html">Live Science</a>.
-                </div>
             </div>
         </div>
-    </section>
-    <footer>
-        <hr>
-
-        <a href="https://newmapsplus.github.io">
-            <img src="https://newmapsplus.github.io/assets/graphics/logo-2018-nmp-75px-h-gray.png"
-                alt="University of Kentucky Geography">
-        </a>
-
-        <a href="https://uky-gis.github.io">
-            <img src="https://newmapsplus.github.io/assets/graphics/logo-2018-geography-75px-h.png"
-                alt="University of Kentucky Geography">
-        </a>
-
-    </footer>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script>
 
 
-    <script>
-        var options = {
-            center: [38, -95],
-            zoom: 4
-        }
-
-        var map = L.map('map', options);
-
-        var basemap_source =
-            'https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/dark_all/{z}/{x}/{y}.png'
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
 
 
-        var basemap_options = {
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-            subdomains: 'abcd',
-            maxZoom: 19
-        };
-
-        var tiles = L.tileLayer(basemap_source, basemap_options).addTo(map);
-
-        $.getJSON("data/dinos.json", function (data) {
-            console.log(data);
-        });
-
-        var triassicStyle = {
-            color: '#fde0dd',
-            fillColor: '#fde0dd',
-            weight: 1,
-            stroke: 2,
-            fillOpacity: .8
-        }
-
-        var jurassicStyle = {
-            color: '#b3cd33',
-            fillColor: '#b3cd33',
-            weight: 1,
-            stroke: 2,
-            fillOpacity: .8
-        }
-
-        var cretStyle = {
-            color: '#b3cde3',
-            fillColor: '#b3cde3',
-            weight: 1,
-            stroke: 2,
-            fillOpacity: .8
-        }
-
-        var commonStyles = {
-            weight: 1,
-            stroke: 1,
-            fillColor: 'green',
-            fillOpacity: .5
-        }
-
-        var fossils = $.getJSON("data/dinos.json", function (data) {
-
-            for (x of data.records) {
-                var lat = x.lat
-                var lng = x.lng
-                var tbm = x.tbm
-                var gnl = x.gnl
-                var tna = x.tna
-                var popup = `<h3>${tbm}</h3> <p>Genus: ${gnl}</p> <p>Species: ${tna}`
-                // console.log(lat, lng);
-                var latlng = L.latLng(lat, lng);
-
-
-                if (triassic.includes(tbm.toLowerCase())) {
-                    commonStyles = triassicStyle
-                } else if (jurassic.includes(tbm.toLowerCase())) {
-                    commonStyles = jurassicStyle
-                } else if (cret.includes(tbm.toLowerCase())) {
-                    commonStyles = cretStyle
-                } else {}
-
-                var marker = L.circleMarker(latlng, commonStyles)
-
-                    .addTo(map)
-                    .bindPopup(popup);
+        <script>
+            var options = {
+                center: [38, -95],
+                zoom: 4
             }
-            drawLegend();
-        });
+
+            var map = L.map('map', options);
 
 
+            var basemap_url = 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
 
-        function drawLegend() {
-            var legend = L.control({
-                position: 'topright'
+            var basemap_attributes = {
+                attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+            }
+
+            var basemap_options = {
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+                subdomains: 'abcd',
+                maxZoom: 19
+            };
+
+            var tiles = L.tileLayer(basemap_url, basemap_attributes).addTo(map);
+
+            $.getJSON("data/dinos.json", function (data) {
+                console.log(data);
             });
-            legend.onAdd = function () {
-                var div = L.DomUtil.create('div', 'legend');
-                categories = ['Triassic', 'Jurassic',
-                    'Cretaceous'
-                ];
-                div.innerHTML = `<h3>Geological Periods</h3>`;
-                for (var i = 0; i < categories.length; i++) {
-                    var colors = ['#fff000', '#b3cd33', '#b3cde3'];
-                    div.innerHTML +=
-                        `<span style="background:${colors[i]}"></span>
+
+            var triassicStyle = {
+                color: 'yellow',
+                fillColor: 'yellow',
+                weight: .4,
+                stroke: 1,
+                fillOpacity: .8
+            }
+
+            var jurassicStyle = {
+                color: 'green',
+                fillColor: 'green',
+                weight: .1,
+                stroke: .3,
+                fillOpacity: .4
+            }
+
+            var cretStyle = {
+                color: '#b3cde3',
+                fillColor: '#b3cde3',
+                weight: .4,
+                stroke: 1,
+                fillOpacity: .4
+            }
+
+            var commonStyles = {
+                weight: 1,
+                stroke: 1,
+                fillColor: 'green',
+                fillOpacity: .4
+            }
+
+            var fossils = $.getJSON("data/dinos.json", function (data) {
+
+                for (x of data.records) {
+                    var lat = x.lat
+                    var lng = x.lng
+                    var tbm = x.tbm
+                    var gnl = x.gnl
+                    var tna = x.tna
+                    var popup = `<h3>More Info</h3> <p><b>Genus</b>: ${gnl}</p> <p><b>Species</b>: ${tna}`
+                    // console.log(lat, lng);
+                    var latlng = L.latLng(lat, lng);
+
+
+                    if (triassic.includes(tbm.toLowerCase())) {
+                        commonStyles = triassicStyle
+                    } else if (jurassic.includes(tbm.toLowerCase())) {
+                        commonStyles = jurassicStyle
+                    } else if (cret.includes(tbm.toLowerCase())) {
+                        commonStyles = cretStyle
+                    } else {}
+
+                    var marker = L.circleMarker(latlng, commonStyles)
+
+                        .addTo(map)
+                        .bindPopup(popup);
+                }
+                drawLegend();
+            });
+
+
+
+            function drawLegend() {
+                var legend = L.control({
+                    position: 'bottomleft'
+                });
+                legend.onAdd = function () {
+                    var div = L.DomUtil.create('div', 'legend');
+                    categories = ['Triassic', 'Jurassic',
+                        'Cretaceous'
+                    ];
+                    div.innerHTML = `<h3>Geological Periods</h3>`;
+                    for (var i = 0; i < categories.length; i++) {
+                        var colors = ['#fff000', 'green', '#b3cde3'];
+                        div.innerHTML +=
+                            `<span style="background:${colors[i]}"></span>
                <label>${(categories[i])}`;
+                    }
+                    return div;
+                };
+                legend.addTo(map);
+            }
+
+            var clicked = false
+
+            function myInfo() {
+                var x = document.getElementById('footer');
+                var y = document.getElementById('info-button');
+                if (clicked) {
+                    y.style.background = 'rgba(100, 100, 100, 0.9)';
+                    x.style.height = '0px';
+                } else {
+                    y.style.background = 'rgba(146, 239, 146, 0.8)'
+                    x.style.height = '33vh';
                 }
-             return div;
-            };
-            legend.addTo(map);
-        }
-
-        /*
-        //function drawLegend() {
-            var legend = L.control({
-                position: 'topleft'
-            });
-            legend.onAdd = function (map) {
-                var div = L.DomUtil.create('div', 'legend');
-                categories = ['Triassic', 'Jurassic', 'Cretaceous'];
-                for (var i = 0; i < categories.length; i++) {
-                    div.innerHTML +=
-                        '<i class= "circle" i style="background:' + getColor(categories[i]) + '"></i> ' +
-                        (categories[i] ? categories[i] + '<br>' : '+');
-                }
-
-                return div;
-            };
-            legend.addTo(map); */
+                clicked = !clicked
+            }
 
 
-
-        var triassic = ["lopingian", "induan", "olenekian", "anisian", "ladinian", "carnian", "norian",
-            "rhaetian"
-        ];
-        var jurassic = ["hettangian", "sinemurian", "pliensbachian", "toarcian", "aalenian", "bajocain",
-            "bathonian",
-            "callovian", "oxfordian", "kimmeridgian", "tithonian"
-        ];
-        var cret = ["berriasian", "valanginian", "hauterivian", "barremian", "aptian", "albian", "cenomanian",
-            "turonian", "coniacian", "santonian", "campanian", "maastrichtian"
-        ]
-    </script>
+            var triassic = ["lopingian", "induan", "olenekian", "anisian", "ladinian", "carnian", "norian",
+                "rhaetian"
+            ];
+            var jurassic = ["hettangian", "sinemurian", "pliensbachian", "toarcian", "aalenian", "bajocain",
+                "bathonian",
+                "callovian", "oxfordian", "kimmeridgian", "tithonian"
+            ];
+            var cret = ["berriasian", "valanginian", "hauterivian", "barremian", "aptian", "albian", "cenomanian",
+                "turonian", "coniacian", "santonian", "campanian", "maastrichtian"
+            ]
+        </script>
 
 </body>
 
